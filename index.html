@@ -142,11 +142,11 @@ html,body{height:100%;overflow:hidden;background:#0a0a0a;font-family:var(--f)}
 /* ─────────────────────────────────────────────────
    WHATSAPP FLOW · réplica fiel del Flow nativo
    ───────────────────────────────────────────────── */
-.flowmodal{position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.3);display:none}
+.flowmodal{position:fixed;top:0;left:0;right:0;bottom:0;width:100%;height:100%;height:100vh;height:100dvh;z-index:200;background:rgba(0,0,0,.3);display:none}
 .flowmodal.show{display:block}
-body.flow-open{overflow:hidden}
+body.flow-open{overflow:hidden;position:fixed;width:100%;height:100%}
 body.flow-open #main{overflow:hidden}
-.flowsheet{position:absolute;left:0;right:0;bottom:0;top:0;background:#fff;display:flex;flex-direction:column;animation:slideUp .3s;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;color:var(--watxt)}
+.flowsheet{position:absolute;left:0;right:0;bottom:0;top:0;width:100%;height:100%;background:#fff;display:flex;flex-direction:column;animation:slideUp .3s;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;color:var(--watxt)}
 @keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
 
 /* Header del Flow (gris claro como WhatsApp real) */
@@ -669,6 +669,7 @@ var FLOW_SCREENS={
   2: ['servicio','datos','ciudad','examenes','resumen']
 };
 
+var savedScrollY=0;
 function openFlow(alt){
   flowState.alt=alt;
   flowState.screen=0;
@@ -689,7 +690,15 @@ function openFlow(alt){
   }else{
     flowState.selectedExams=[];
   }
-  document.getElementById('flowmodal').className='flowmodal show';
+  // Guardar posición de scroll del chat (iOS necesita esto)
+  var chat=document.getElementById('chat');
+  savedScrollY=chat?chat.scrollTop:0;
+  // Forzar altura explícita del modal para iOS Safari
+  var modal=document.getElementById('flowmodal');
+  modal.style.height=window.innerHeight+'px';
+  var sheet=modal.querySelector('.flowsheet');
+  if(sheet)sheet.style.height=window.innerHeight+'px';
+  modal.className='flowmodal show';
   document.body.classList.add('flow-open');
   renderFlowScreen();
 }
@@ -698,6 +707,7 @@ function closeFlow(){
   document.body.classList.remove('flow-open');
   // Forzar recálculo y scroll antes de continuar
   fixH();
+  // Restaurar scroll del chat
   requestAnimationFrame(function(){
     requestAnimationFrame(function(){
       var c=document.getElementById('chat');
