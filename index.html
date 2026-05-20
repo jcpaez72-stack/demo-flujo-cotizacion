@@ -1,0 +1,970 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="theme-color" content="#075E54">
+<title>InterNOVA · F1 Cotización · WhatsApp Flow</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
+:root{
+  --g1:#064E47;--g2:#075E54;--g3:#128C7E;
+  --wa:#25D366;--wam:#DCF8C6;
+  --chat:#E5DDD5;--f:'Plus Jakarta Sans',sans-serif;--m:'JetBrains Mono',monospace;
+  --waflow:#008069;--wabtn:#00A884;--wabg:#F0F2F5;--watxt:#111B21;--wasub:#667781;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;overflow:hidden;background:#0a0a0a;font-family:var(--f)}
+
+/* INTRO */
+#intro{position:fixed;inset:0;z-index:100;background:linear-gradient(160deg,#021a17,#053d36 45%,#064E47);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px 20px;transition:opacity .5s;overflow-y:auto}
+#intro.hide{opacity:0;pointer-events:none}
+.il{width:72px;height:72px;border-radius:20px;background:linear-gradient(135deg,#075E54,#25D366);display:flex;align-items:center;justify-content:center;font-size:30px;margin-bottom:14px;box-shadow:0 0 0 1px rgba(37,211,102,.25),0 8px 40px rgba(37,211,102,.25)}
+.ibr{color:rgba(255,255,255,.4);font-size:10px;letter-spacing:5px;text-transform:uppercase;margin-bottom:6px;font-weight:700}
+.itr{color:#fff;font-size:26px;font-weight:800;letter-spacing:-1px;text-align:center;margin-bottom:4px}
+.isu{color:rgba(255,255,255,.5);font-size:11px;text-align:center;margin-bottom:18px;line-height:1.5;max-width:380px}
+.altpicker{display:flex;flex-direction:column;gap:10px;width:100%;max-width:400px;margin-bottom:18px}
+.altcard{background:rgba(255,255,255,.05);border:1.5px solid rgba(255,255,255,.1);border-radius:12px;padding:14px;cursor:pointer;transition:all .15s;text-align:left}
+.altcard:hover{background:rgba(37,211,102,.1);border-color:rgba(37,211,102,.4)}
+.altcard:active{transform:scale(.98)}
+.altlbl{font-size:9px;color:var(--wa);font-weight:800;letter-spacing:1px;margin-bottom:4px}
+.alttit{font-size:14px;color:#fff;font-weight:700;margin-bottom:3px}
+.altdesc{font-size:10.5px;color:rgba(255,255,255,.5);line-height:1.4}
+.icr{margin-top:10px;text-align:center}
+.icr-n{color:rgba(255,255,255,.65);font-size:11px;font-weight:700}
+.icr-r{color:rgba(255,255,255,.3);font-size:9px;margin-top:2px}
+.icr-t{color:var(--wa);font-size:9px;font-weight:700;margin-top:2px;letter-spacing:.5px}
+
+/* MAIN */
+#main{display:none;flex-direction:column}
+#main.show{display:flex}
+
+/* TOPBAR */
+.topbar{background:var(--g2);flex-shrink:0}
+.tb1{display:flex;align-items:center;gap:8px;padding:8px 12px}
+.tbback{background:rgba(255,255,255,.1);border:none;color:#fff;font-size:16px;width:28px;height:28px;border-radius:50%;cursor:pointer}
+.av{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#128C7E,#25D366);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;color:#fff;flex-shrink:0}
+.tbn{color:#fff;font-size:13px;font-weight:700}
+.tbs{color:rgba(255,255,255,.55);font-size:9px;margin-top:1px}
+.tbbg{margin-left:auto;background:rgba(37,211,102,.2);border:1px solid rgba(37,211,102,.35);border-radius:6px;padding:3px 8px;color:#4ADE80;font-size:8px;font-weight:800;letter-spacing:.5px;flex-shrink:0}
+.ctx{background:rgba(0,0,0,.22);padding:4px 12px;display:flex;align-items:center;gap:5px}
+.ctxd{width:5px;height:5px;border-radius:50%;background:#4ADE80;animation:pu 2s infinite;flex-shrink:0}
+@keyframes pu{0%,100%{opacity:1}50%{opacity:.2}}
+.ctxl{font-size:8px;color:rgba(255,255,255,.3);font-weight:700;letter-spacing:.5px}
+.ctxv{font-size:9px;color:#4ADE80;font-weight:700;margin-left:auto;max-width:75%;text-align:right;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-family:var(--m)}
+
+/* CHAT */
+.chat{flex:1;min-height:0;overflow-y:auto;padding:10px;display:flex;flex-direction:column;gap:5px;background:var(--chat);-webkit-overflow-scrolling:touch}
+.dp{align-self:center;background:rgba(0,0,0,.1);border-radius:10px;padding:3px 12px;font-size:10px;color:#777}
+.sm{align-self:center;background:rgba(7,94,84,.09);border:1px solid rgba(7,94,84,.16);border-radius:10px;padding:5px 12px;font-size:10px;color:var(--g2);font-weight:600;text-align:center;max-width:95%;line-height:1.5}
+.b{max-width:86%;border-radius:13px;padding:9px 12px;font-size:13px;line-height:1.6;word-break:break-word}
+.b.bot{background:#fff;align-self:flex-start;border-top-left-radius:3px;color:#111;box-shadow:0 1px 3px rgba(0,0,0,.1)}
+.b.usr{background:var(--wam);align-self:flex-end;border-top-right-radius:3px;color:#111;box-shadow:0 1px 3px rgba(0,0,0,.1)}
+.bt{font-size:9px;color:#aaa;margin-top:4px;text-align:right}
+.b.bot .bt{text-align:left}
+.lvl{display:inline-flex;align-items:center;gap:3px;font-size:8px;font-weight:700;padding:2px 6px;border-radius:5px;margin-top:5px;border:.5px solid;font-family:var(--m);letter-spacing:.3px}
+.nlu{background:#EDE9FE;color:#6D28D9;border-color:#6D28D9}
+.api{background:#D1FAE5;color:#065F46;border-color:#065F46}
+.hum{background:#FEE2E2;color:#991B1B;border-color:#991B1B}
+.flw{background:#DBEAFE;color:#1E40AF;border-color:#1E40AF}
+
+/* MENSAJE BOT con CTA Flow — réplica de WhatsApp interactive message */
+.b.bot.cta{padding:0;max-width:88%;overflow:hidden}
+.cta-txt{padding:9px 12px 8px;font-size:13px;line-height:1.55}
+.cta-btn{display:block;text-align:center;padding:11px;border-top:1px solid #ECECEC;font-size:14px;font-weight:600;color:#00A5F4;cursor:pointer;background:#fff;transition:background .15s}
+.cta-btn:active{background:#F5F5F5}
+.cta-btn-meta{padding:0 12px 8px}
+
+/* Mensaje del Flow ENVIADO por el usuario (resumen visible en chat) */
+.flowmsg{background:var(--wam);align-self:flex-end;border-radius:13px;border-top-right-radius:3px;max-width:90%;box-shadow:0 1px 3px rgba(0,0,0,.1);overflow:hidden}
+.flowmsg-h{background:rgba(0,0,0,.04);padding:8px 12px;display:flex;align-items:center;gap:8px;border-bottom:1px solid rgba(0,0,0,.06)}
+.flowmsg-h-ico{width:24px;height:24px;border-radius:50%;background:var(--g2);color:#fff;display:flex;align-items:center;justify-content:center;font-size:11px;flex-shrink:0}
+.flowmsg-h-tit{font-size:11px;font-weight:700;color:#222;flex:1}
+.flowmsg-h-sub{font-size:9px;color:#666;margin-top:1px}
+.flowmsg-b{padding:8px 12px}
+.flowmsg-row{display:flex;justify-content:space-between;align-items:flex-start;gap:8px;padding:3px 0;font-size:11.5px}
+.flowmsg-row-k{color:#5a5a5a;flex-shrink:0}
+.flowmsg-row-v{color:#111;font-weight:600;text-align:right}
+.flowmsg-divider{height:1px;background:rgba(0,0,0,.06);margin:6px 0}
+.flowmsg-list{font-size:11px;color:#333;padding:2px 0 4px;line-height:1.5}
+.flowmsg-list-i{display:flex;align-items:center;gap:6px;padding:1px 0}
+.flowmsg-list-i .d{color:#888;font-size:9px}
+.flowmsg-total{background:#075E54;color:#fff;padding:7px 12px;display:flex;justify-content:space-between;align-items:center;border-radius:6px;margin-top:5px}
+.flowmsg-total-l{font-size:10px;font-weight:700;letter-spacing:.5px}
+.flowmsg-total-v{font-size:15px;font-weight:800;font-family:var(--m)}
+.flowmsg-bt{font-size:9px;color:#666;padding:0 12px 6px;text-align:right}
+
+/* PANEL ASESOR */
+.apanel{align-self:flex-start;max-width:93%;background:linear-gradient(135deg,#1E1B4B,#2D2A6E);border-radius:13px;border-top-left-radius:3px;padding:0;box-shadow:0 2px 12px rgba(0,0,0,.25);overflow:hidden}
+.aphdr{background:rgba(0,0,0,.25);padding:9px 14px;display:flex;align-items:center;gap:8px}
+.aphdr-ico{width:24px;height:24px;border-radius:50%;background:#A5B4FC;color:#1E1B4B;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;font-weight:800}
+.aphdr-t{color:#A5B4FC;font-size:10px;font-weight:800;letter-spacing:.5px}
+.aphdr-s{color:rgba(255,255,255,.4);font-size:9px;margin-top:1px}
+.apbody{padding:11px 14px}
+.aps{font-size:9px;color:#A5B4FC;font-weight:800;letter-spacing:.5px;text-transform:uppercase;margin-top:8px;margin-bottom:4px;padding-bottom:3px;border-bottom:1px solid rgba(165,180,252,.2)}
+.aps:first-child{margin-top:0}
+.apr{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:3px;gap:8px}
+.apk{color:rgba(255,255,255,.4);font-size:10px;flex-shrink:0}
+.apv{color:#fff;font-size:10px;font-weight:600;text-align:right;line-height:1.4}
+.aplist{padding-left:4px;margin-top:3px}
+.apli{font-size:10px;color:#fff;padding:1px 0;display:flex;justify-content:space-between;gap:8px}
+.apli-n{color:rgba(255,255,255,.85)}
+.apli-p{color:#A5B4FC;font-family:var(--m);font-weight:700}
+.aptot{display:flex;justify-content:space-between;background:rgba(165,180,252,.15);padding:6px 10px;border-radius:6px;margin-top:6px}
+.aptot-l{font-size:10px;color:#A5B4FC;font-weight:800;letter-spacing:.3px}
+.aptot-v{font-size:13px;color:#fff;font-weight:800;font-family:var(--m)}
+.apnote{color:rgba(255,255,255,.4);font-size:9px;margin-top:10px;border-top:1px solid rgba(255,255,255,.08);padding-top:7px;font-style:italic;line-height:1.5}
+.apnote strong{color:#A5B4FC}
+
+/* COTIZACIÓN CARD */
+.ccard{align-self:flex-start;max-width:93%;background:#fff;border-radius:13px;border-top-left-radius:3px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,.12)}
+.cch{background:linear-gradient(135deg,var(--g1),var(--g2));padding:11px 14px}
+.ccht{color:#fff;font-size:11px;font-weight:800;letter-spacing:.5px}
+.cchs{color:rgba(255,255,255,.55);font-size:9px;margin-top:1px}
+.ccb{padding:11px 14px}
+.ccrow{display:flex;justify-content:space-between;align-items:flex-start;padding:7px 0;border-bottom:1px solid #f5f5f5}
+.ccrow:last-child{border:none}
+.ccn{font-size:12px;color:#111;font-weight:600;margin-bottom:2px}
+.ccc{font-size:9px;color:#999;font-family:var(--m)}
+.ccpv{font-size:13.5px;font-weight:800;color:#065F46;text-align:right;white-space:nowrap}
+.ccps{font-size:10px;color:#059669;font-weight:600;text-align:right;margin-top:1px}
+.cctot{background:#F0FDF4;border-radius:9px;padding:9px 12px;margin-top:8px;display:flex;justify-content:space-between;align-items:center}
+.cctl{font-size:11px;font-weight:700;color:#065F46}
+.cctv{font-size:18px;font-weight:800;color:#065F46}
+.ccod{background:var(--g2);border-radius:7px;padding:7px 12px;margin-top:8px;font-family:var(--m);font-size:11px;color:#fff;font-weight:700;text-align:center;letter-spacing:1px}
+.ccnote{font-size:9px;color:#666;margin-top:7px;padding:7px;background:#FFFBEB;border-radius:7px;border-left:3px solid #F59E0B;line-height:1.4}
+.ccpdf{display:flex;align-items:center;gap:8px;padding:8px 10px;background:#F8F9FA;border-radius:7px;margin-top:7px;border:1px solid #E9ECEF}
+.ccpdf-ico{width:30px;height:30px;background:#DC3545;color:#fff;border-radius:5px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:9px;font-family:var(--m)}
+.ccpdf-t{flex:1;font-size:11px;color:#222;font-weight:600}
+.ccpdf-s{font-size:9px;color:#888;margin-top:1px}
+.ccpdf-d{color:var(--g2);font-size:14px}
+
+/* ─────────────────────────────────────────────────
+   WHATSAPP FLOW · réplica fiel del Flow nativo
+   ───────────────────────────────────────────────── */
+.flowmodal{position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.3);display:none}
+.flowmodal.show{display:block}
+body.flow-open{overflow:hidden}
+body.flow-open #main{overflow:hidden}
+.flowsheet{position:absolute;left:0;right:0;bottom:0;top:0;background:#fff;display:flex;flex-direction:column;animation:slideUp .3s;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;color:var(--watxt)}
+@keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
+
+/* Header del Flow (gris claro como WhatsApp real) */
+.flowhead{background:var(--wabg);padding:14px 14px 11px;display:flex;align-items:center;gap:8px;flex-shrink:0;border-bottom:1px solid #E9EDEF}
+.flowclose{background:transparent;border:none;color:var(--watxt);width:30px;height:30px;font-size:22px;cursor:pointer;font-weight:300}
+.flowtitlewrap{flex:1}
+.flowtitle{font-size:14px;font-weight:600;color:var(--watxt);line-height:1.2}
+.flowsub{color:var(--wasub);font-size:10px;margin-top:2px;display:flex;align-items:center;gap:4px}
+.flowsub-lock{font-size:9px}
+
+/* Progreso del Flow */
+.flowprog{display:flex;gap:3px;padding:8px 14px;background:#fff;flex-shrink:0}
+.flowprog-bar{flex:1;height:3px;background:#E9EDEF;border-radius:2px;overflow:hidden}
+.flowprog-bar.on{background:var(--wabtn)}
+.flowprog-bar.done{background:var(--wabtn)}
+
+/* Cuerpo del Flow */
+.flowbody{flex:1;overflow-y:auto;padding:18px 18px 12px;background:#fff;-webkit-overflow-scrolling:touch}
+.flowscreentit{font-size:18px;font-weight:600;color:var(--watxt);margin-bottom:6px;line-height:1.25}
+.flowscreendesc{font-size:13px;color:var(--wasub);margin-bottom:18px;line-height:1.5}
+
+/* Campos del Flow */
+.flowfield{margin-bottom:16px}
+.flowlbl{font-size:13px;font-weight:600;color:var(--watxt);margin-bottom:6px;display:flex;align-items:center;gap:3px}
+.flowlbl .req{color:#dc2626}
+.flowinp{width:100%;border:1px solid #D1D7DB;border-radius:8px;padding:11px 13px;font-size:14px;font-family:inherit;outline:none;transition:border-color .15s;background:#fff;color:var(--watxt)}
+.flowinp:focus{border-color:var(--wabtn);border-width:1.5px;padding:10.5px 12.5px}
+.flowinp::placeholder{color:#A8A8A8}
+.flowselect{width:100%;border:1px solid #D1D7DB;border-radius:8px;padding:11px 13px;font-size:14px;font-family:inherit;outline:none;background:#fff;color:var(--watxt);appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='%23667781'%3E%3Cpath d='M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;background-size:20px;padding-right:38px}
+
+/* Radio buttons del Flow */
+.flowradios{display:flex;flex-direction:column;gap:8px}
+.flowradio{display:flex;align-items:center;gap:12px;background:#fff;border:1px solid #D1D7DB;border-radius:8px;padding:13px 14px;cursor:pointer;transition:all .15s}
+.flowradio.on{border-color:var(--wabtn);border-width:1.5px;background:#F0FAF4;padding:12.5px 13.5px}
+.flowradio-dot{width:20px;height:20px;border-radius:50%;border:2px solid #C0C5C8;flex-shrink:0;position:relative;transition:all .15s}
+.flowradio.on .flowradio-dot{border-color:var(--wabtn)}
+.flowradio.on .flowradio-dot::after{content:'';position:absolute;inset:3px;background:var(--wabtn);border-radius:50%}
+.flowradio-lbl{font-size:14px;font-weight:500;color:var(--watxt);flex:1}
+.flowradio-icon{font-size:18px}
+
+/* Checkboxes */
+.flowchk{display:flex;align-items:flex-start;gap:10px;font-size:13px;color:var(--watxt);cursor:pointer;margin-top:8px;line-height:1.4}
+.flowchk-box{width:18px;height:18px;border:2px solid #C0C5C8;border-radius:4px;flex-shrink:0;margin-top:1px;display:flex;align-items:center;justify-content:center;transition:all .15s}
+.flowchk.on .flowchk-box{background:var(--wabtn);border-color:var(--wabtn);color:#fff;font-size:12px;font-weight:800}
+.flowchk.on .flowchk-box::after{content:'✓'}
+
+/* Footer del Flow */
+.flowfoot{background:#fff;border-top:1px solid #E9EDEF;padding:10px 16px;padding-bottom:max(12px,env(safe-area-inset-bottom));flex-shrink:0;display:flex;align-items:center;gap:10px}
+.flowfoot-info{flex:1;min-width:0}
+.flowfoot-tot-l{font-size:10px;color:var(--wasub);font-weight:600;letter-spacing:.3px;text-transform:uppercase}
+.flowfoot-tot-v{font-size:19px;font-weight:700;color:var(--watxt);font-family:var(--m);line-height:1.2}
+.flowfoot-tot-c{font-size:10px;color:var(--wasub);margin-top:1px}
+.flowsend{background:var(--wabtn);color:#fff;border:none;border-radius:24px;padding:13px 22px;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;flex-shrink:0;min-width:110px;transition:all .15s}
+.flowsend:active:not(:disabled){background:#008F70;transform:scale(.97)}
+.flowsend:disabled{background:#D1D7DB;color:#fff;cursor:default}
+
+/* OCR card */
+.ocrcard{background:#F0FAF4;border:1.5px dashed var(--wabtn);border-radius:10px;padding:14px 12px;text-align:center;margin-bottom:14px;cursor:pointer;transition:all .15s}
+.ocrcard:active{transform:scale(.98)}
+.ocrico{font-size:26px;margin-bottom:5px}
+.ocrtit{font-size:13px;font-weight:600;color:var(--watxt)}
+.ocrsub{font-size:11px;color:var(--wasub);margin-top:3px;line-height:1.4}
+
+/* Tabs de exámenes */
+.flowtabs{display:flex;gap:0;margin-bottom:10px;border-bottom:1px solid #E9EDEF;overflow-x:auto;scrollbar-width:none}
+.flowtabs::-webkit-scrollbar{display:none}
+.flowtab{padding:9px 14px;font-size:12px;font-weight:500;color:var(--wasub);cursor:pointer;text-align:center;border-bottom:2.5px solid transparent;transition:all .15s;white-space:nowrap;font-family:inherit}
+.flowtab.on{color:var(--wabtn);border-bottom-color:var(--wabtn);font-weight:600}
+
+/* Lista de exámenes */
+.searchbox{margin-bottom:10px}
+.examlist{display:flex;flex-direction:column;gap:6px}
+.examitem{display:flex;align-items:center;gap:11px;padding:10px 12px;background:#fff;border:1px solid #E9EDEF;border-radius:8px;cursor:pointer;transition:all .12s}
+.examitem.on{background:#F0FAF4;border-color:var(--wabtn);border-width:1.5px;padding:9.5px 11.5px}
+.examitem .cb{width:18px;height:18px;border:2px solid #C0C5C8;border-radius:4px;flex-shrink:0;display:flex;align-items:center;justify-content:center;background:#fff;transition:all .15s}
+.examitem.on .cb{background:var(--wabtn);border-color:var(--wabtn);color:#fff;font-size:11px;font-weight:800}
+.examitem.on .cb::after{content:'✓'}
+.examinfo{flex:1;min-width:0}
+.examname{font-size:13px;color:var(--watxt);font-weight:500;line-height:1.3}
+.examcat{font-size:10px;color:var(--wasub);margin-top:2px;font-family:var(--m)}
+.examprice{font-size:13px;font-weight:600;color:var(--watxt);font-family:var(--m);flex-shrink:0}
+
+/* Pantalla de resumen */
+.summbox{background:#F7F8FA;border:1px solid #E9EDEF;border-radius:10px;padding:13px 14px;margin-bottom:14px}
+.summsec{margin-bottom:10px}
+.summsec:last-child{margin-bottom:0}
+.summlbl{font-size:10px;color:var(--wasub);font-weight:700;letter-spacing:.5px;text-transform:uppercase;margin-bottom:4px}
+.summval{font-size:13px;color:var(--watxt);font-weight:500;line-height:1.45}
+.summlist{font-size:13px;color:var(--watxt);line-height:1.6}
+
+/* IBAR */
+.ibar{background:#F0EAE0;padding:5px 10px;padding-bottom:max(8px,env(safe-area-inset-bottom));flex-shrink:0;border-top:1px solid rgba(0,0,0,.06)}
+.irow{display:flex;align-items:center;gap:7px;max-width:600px;margin:0 auto}
+.ihnt{text-align:center;font-size:9px;color:#aaa;margin-top:3px}
+.inxt{flex:1;background:var(--wa);color:#fff;border:none;border-radius:22px;padding:12px 18px;font-size:13px;font-weight:700;cursor:pointer;font-family:var(--f);box-shadow:0 3px 10px rgba(37,211,102,.35);transition:transform .15s}
+.inxt:active{transform:scale(.97)}
+.inxt:disabled{background:#ccc;box-shadow:none;cursor:default}
+.irst{background:rgba(7,94,84,.08);border:1.5px solid rgba(7,94,84,.2);color:var(--g2);border-radius:22px;padding:12px 14px;font-size:12px;font-weight:700;cursor:pointer;font-family:var(--f);white-space:nowrap;flex-shrink:0}
+</style>
+</head>
+<body>
+
+<div id="intro">
+  <div class="il">🔬</div>
+  <div class="ibr">WDB / 593IA · Jelou</div>
+  <div class="itr">F1 · Cotización</div>
+  <div class="isu">Demo refinada · WhatsApp Flow nativo<br>Réplica fiel de la plataforma Jelou</div>
+  <div class="altpicker">
+    <div class="altcard" onclick="startAlt(1)">
+      <div class="altlbl">ALTERNATIVA 1</div>
+      <div class="alttit">Formulario + Asesor</div>
+      <div class="altdesc">Flow captura datos del paciente · Asesor cierra cotización en el sistema con el cliente</div>
+    </div>
+    <div class="altcard" onclick="startAlt(2)">
+      <div class="altlbl">ALTERNATIVA 2</div>
+      <div class="alttit">Cotizador automatizado</div>
+      <div class="altdesc">Flow replica el cotizador web 100% · Top 30 exámenes Ecuador · PDF al instante · Sin asesor</div>
+    </div>
+  </div>
+  <div class="icr">
+    <div class="icr-n">Juan Carlos Páez · WDB / 593IA</div>
+    <div class="icr-r">F1 refinado post-kickoff INTERLAB</div>
+    <div class="icr-t">JELOU Platform Partner · 593IA</div>
+  </div>
+</div>
+
+<div id="main">
+  <div class="topbar">
+    <div class="tb1">
+      <button class="tbback" onclick="goIntro()">←</button>
+      <div class="av">IN</div>
+      <div style="flex:1"><div class="tbn">InterNOVA ✓</div><div class="tbs" id="bst">F1 · Powered by Jelou</div></div>
+      <div class="tbbg" id="altbadge">ALT 1</div>
+    </div>
+    <div class="ctx"><div class="ctxd"></div><div class="ctxl">CONTEXTO JELOU</div><div class="ctxv" id="ctx">Sesión nueva</div></div>
+  </div>
+  <div class="chat" id="chat"></div>
+  <div class="ibar">
+    <div class="irow">
+      <button class="irst" onclick="restart()">↺ Reiniciar</button>
+      <button class="inxt" id="nxtbtn" onclick="nextStep()">▶ Siguiente paso</button>
+    </div>
+    <div class="ihnt" id="hint">Presiona Siguiente paso para avanzar</div>
+  </div>
+</div>
+
+<!-- ── WHATSAPP FLOW MODAL ── -->
+<div class="flowmodal" id="flowmodal">
+  <div class="flowsheet">
+    <div class="flowhead">
+      <button class="flowclose" onclick="closeFlow()">✕</button>
+      <div class="flowtitlewrap">
+        <div class="flowtitle" id="flowtitle">Cotización Interlab</div>
+        <div class="flowsub">🔒 <span>Gestionado por Interlab</span></div>
+      </div>
+    </div>
+    <div class="flowprog" id="flowprog"></div>
+    <div class="flowbody" id="flowbody"></div>
+    <div class="flowfoot" id="flowfoot">
+      <div class="flowfoot-info" id="flowfootinfo"></div>
+      <button class="flowsend" id="flowsend" onclick="flowNext()">Continuar</button>
+    </div>
+  </div>
+</div>
+
+<script>
+'use strict';
+
+function fixH(){
+  var m=document.getElementById('main');
+  if(m&&m.classList.contains('show'))m.style.height=window.innerHeight+'px';
+}
+window.addEventListener('resize',fixH);
+window.addEventListener('orientationchange',function(){setTimeout(fixH,300);});
+
+var currentAlt=1,stepIdx=0;
+
+function ts(){var n=new Date();return n.getHours()+':'+('0'+n.getMinutes()).slice(-2);}
+function scrollDn(){
+  var c=document.getElementById('chat');
+  if(!c)return;
+  // Doble requestAnimationFrame para garantizar render completo antes de scroll
+  requestAnimationFrame(function(){
+    requestAnimationFrame(function(){
+      c.scrollTop=c.scrollHeight+9999;
+    });
+  });
+}
+function setCtx(t){document.getElementById('ctx').textContent=t;}
+function setHint(t){document.getElementById('hint').textContent=t;}
+function done(){
+  document.getElementById('nxtbtn').textContent='✅ Completado';
+  document.getElementById('nxtbtn').disabled=true;
+  setHint('Flujo completado. Presiona Reiniciar o vuelve para ver la otra alternativa.');
+}
+
+function addBot(html,tag,lvl){
+  var c=document.getElementById('chat');
+  var d=document.createElement('div');d.className='b bot';
+  var em={api:'⚡',hum:'👤',nlu:'🧠',flw:'📋'}[lvl]||'🧠';
+  d.innerHTML=html+'<br><span class="lvl '+lvl+'">'+em+' '+tag+'</span><div class="bt">'+ts()+'</div>';
+  c.appendChild(d);scrollDn();
+}
+function addBotCTA(txt,btnText,btnAction,tag){
+  var c=document.getElementById('chat');
+  var d=document.createElement('div');d.className='b bot cta';
+  d.innerHTML='<div class="cta-txt">'+txt+'</div>'
+    +'<div class="cta-btn-meta"><span class="lvl flw">📋 WhatsApp Flow · Jelou</span><div class="bt">'+ts()+'</div></div>'
+    +'<div class="cta-btn" onclick="'+btnAction+'">📋 '+btnText+'</div>';
+  c.appendChild(d);scrollDn();
+}
+function addUsr(t){
+  var c=document.getElementById('chat');
+  var d=document.createElement('div');d.className='b usr';
+  d.innerHTML=t.replace(/\n/g,'<br>')+'<div class="bt">'+ts()+' ✓✓</div>';
+  c.appendChild(d);scrollDn();
+}
+function addSys(t){
+  var c=document.getElementById('chat');
+  var d=document.createElement('div');d.className='sm';
+  d.innerHTML=t;c.appendChild(d);scrollDn();
+}
+function addDp(t){
+  var c=document.getElementById('chat');
+  var d=document.createElement('div');d.className='dp';
+  d.textContent=t;c.appendChild(d);scrollDn();
+}
+
+// Mensaje del Flow ENVIADO por el usuario en chat (resumen visible)
+function addFlowSubmittedMsg(data){
+  var c=document.getElementById('chat');
+  var d=document.createElement('div');d.className='flowmsg';
+  var rows='';
+  data.fields.forEach(function(f){
+    rows+='<div class="flowmsg-row"><span class="flowmsg-row-k">'+f[0]+'</span><span class="flowmsg-row-v">'+f[1]+'</span></div>';
+  });
+  var exams='';
+  if(data.exams&&data.exams.length){
+    exams='<div class="flowmsg-divider"></div><div class="flowmsg-row" style="margin-bottom:3px"><span class="flowmsg-row-k" style="font-weight:700">Exámenes seleccionados</span></div>';
+    exams+='<div class="flowmsg-list">';
+    data.exams.forEach(function(e){
+      exams+='<div class="flowmsg-list-i"><span class="d">•</span><span>'+e.n+'</span><span style="margin-left:auto;font-family:'+'\'JetBrains Mono\',monospace'+';font-size:10.5px">$'+e.p.toFixed(2)+'</span></div>';
+    });
+    exams+='</div>';
+  }
+  var total='';
+  if(data.total){
+    total='<div class="flowmsg-total"><span class="flowmsg-total-l">TOTAL ESTIMADO</span><span class="flowmsg-total-v">$'+data.total.toFixed(2)+'</span></div>';
+  }
+  d.innerHTML='<div class="flowmsg-h">'
+    +'<div class="flowmsg-h-ico">📋</div>'
+    +'<div style="flex:1"><div class="flowmsg-h-tit">'+data.title+'</div><div class="flowmsg-h-sub">Formulario enviado</div></div>'
+    +'</div>'
+    +'<div class="flowmsg-b">'+rows+exams+total+'</div>'
+    +'<div class="flowmsg-bt">'+ts()+' ✓✓</div>';
+  c.appendChild(d);scrollDn();
+}
+
+// Panel del asesor — replica exacta del resumen que vio el usuario
+function addAsesorPanel(data,nota){
+  var c=document.getElementById('chat');
+  var p=document.createElement('div');p.className='apanel';
+  var html='<div class="aphdr">'
+    +'<div class="aphdr-ico">A</div>'
+    +'<div><div class="aphdr-t">CONTEXTO TRANSFERIDO AL ASESOR</div><div class="aphdr-s">Jelou · Historial chat + Formulario completo</div></div>'
+    +'</div><div class="apbody">';
+
+  data.sections.forEach(function(s){
+    html+='<div class="aps">'+s.title+'</div>';
+    if(s.fields){
+      s.fields.forEach(function(f){
+        html+='<div class="apr"><span class="apk">'+f[0]+'</span><span class="apv">'+f[1]+'</span></div>';
+      });
+    }
+    if(s.list){
+      html+='<div class="aplist">';
+      s.list.forEach(function(e){
+        html+='<div class="apli"><span class="apli-n">'+e.n+'</span><span class="apli-p">$'+e.p.toFixed(2)+'</span></div>';
+      });
+      html+='</div>';
+      if(s.total){
+        html+='<div class="aptot"><span class="aptot-l">TOTAL ESTIMADO</span><span class="aptot-v">$'+s.total.toFixed(2)+'</span></div>';
+      }
+    }
+  });
+  html+=(nota?'<div class="apnote">'+nota+'</div>':'')+'</div>';
+  p.innerHTML=html;
+  c.appendChild(p);scrollDn();
+}
+
+// ── TOP 30 EXÁMENES MÁS SOLICITADOS EN ECUADOR ──────────────
+var TOP30=[
+  {n:'Hemograma completo',cod:'HEM',p:9.50,cat:'H1',sub:'Hematología'},
+  {n:'Hemoglobina',cod:'HB',p:5.50,cat:'H1',sub:'Hematología'},
+  {n:'Hematocrito',cod:'HCT',p:5.50,cat:'H1',sub:'Hematología'},
+  {n:'Grupo sanguíneo y Rh',cod:'GSRH',p:7.00,cat:'H1',sub:'Hematología'},
+  {n:'Glucosa en ayunas',cod:'GLUA',p:8.50,cat:'H1',sub:'Bioquímica'},
+  {n:'Urea / BUN',cod:'BUN',p:7.00,cat:'H1',sub:'Bioquímica'},
+  {n:'Creatinina',cod:'CREA',p:7.00,cat:'H1',sub:'Bioquímica'},
+  {n:'Ácido úrico',cod:'AU',p:7.00,cat:'H1',sub:'Bioquímica'},
+  {n:'Hemoglobina glicosilada HbA1c',cod:'HBA1C',p:14.00,cat:'H1',sub:'Bioquímica'},
+  {n:'Glucosa postprandial 2h',cod:'GLUP2',p:9.00,cat:'H1',sub:'Bioquímica'},
+  {n:'Bilirrubina total y fraccionada',cod:'BILT',p:9.00,cat:'H1',sub:'Bioquímica'},
+  {n:'Examen general de orina (EMO)',cod:'EMO',p:6.50,cat:'H1',sub:'Uroanálisis'},
+  {n:'Colesterol total',cod:'COL',p:8.00,cat:'H1',sub:'Perfil lipídico'},
+  {n:'HDL Colesterol',cod:'HDL',p:8.00,cat:'H1',sub:'Perfil lipídico'},
+  {n:'LDL Colesterol',cod:'LDL',p:8.00,cat:'H1',sub:'Perfil lipídico'},
+  {n:'Triglicéridos',cod:'TRI',p:8.00,cat:'H1',sub:'Perfil lipídico'},
+  {n:'TGO (AST)',cod:'TGO',p:8.00,cat:'H1',sub:'Perfil hepático'},
+  {n:'TGP (ALT)',cod:'TGP',p:8.00,cat:'H1',sub:'Perfil hepático'},
+  {n:'Fosfatasa alcalina',cod:'FA',p:8.50,cat:'H1',sub:'Perfil hepático'},
+  {n:'TSH',cod:'TSH',p:12.00,cat:'H2',sub:'Endocrinología'},
+  {n:'T4 Libre',cod:'T4L',p:11.00,cat:'H2',sub:'Endocrinología'},
+  {n:'T3',cod:'T3',p:11.00,cat:'H2',sub:'Endocrinología'},
+  {n:'Insulina',cod:'INS',p:13.00,cat:'H2',sub:'Endocrinología'},
+  {n:'VIH (anticuerpos)',cod:'VIH',p:15.00,cat:'H2',sub:'Infecciones'},
+  {n:'Hepatitis B (HBsAg)',cod:'HEBSAG',p:14.00,cat:'H2',sub:'Infecciones'},
+  {n:'VDRL / Sífilis',cod:'VDRL',p:9.00,cat:'H2',sub:'Infecciones'},
+  {n:'PSA (antígeno prostático)',cod:'PSA',p:18.00,cat:'H2',sub:'Marcadores'},
+  {n:'Beta-HCG (embarazo)',cod:'BHCG',p:14.00,cat:'H2',sub:'Marcadores'},
+  {n:'Vitamina D',cod:'VITD',p:28.00,cat:'Esp',sub:'Vitaminas'},
+  {n:'Vitamina B12',cod:'B12',p:22.00,cat:'Esp',sub:'Vitaminas'},
+];
+
+// ── MENSAJES GLOBALES ──────────────────────────────────────
+var PDP='Buenos días 👋 Bienvenido a Interlab. Estoy aquí para ayudarle con información sobre nuestros servicios.'
+  +'<br><br>🔐 <strong>Protección de sus datos personales</strong><br>'
+  +'Para continuar, necesito su consentimiento expreso para el tratamiento de sus datos personales conforme a nuestra política:<br>'
+  +'👉 <span style="color:var(--g2);text-decoration:underline">interlab.com.ec/proteccióndatos.html</span>'
+  +'<br><br>¿Acepta nuestra política de tratamiento de datos personales?';
+
+// ═══════════════════════════════════════════════════
+// FLOW STATE — datos del formulario
+// ═══════════════════════════════════════════════════
+var flowState={
+  alt:1,
+  screen:0,
+  totalScreens:0,
+  servicio:'Ventanilla',
+  cedula:'',paciente:'',email:'',sendpdf:true,
+  ciudad:'Guayaquil',tipo:'particular',seguro:'BMI',convenio:'',
+  selectedExams:[],
+  tab:'H1',search:'',
+};
+
+// ═══════════════════════════════════════════════════
+// ALTERNATIVA 1 — STEPS DEL CHAT
+// ═══════════════════════════════════════════════════
+var ALT1=[
+  {fn:function(){
+    addDp('Hoy · Demo F1 · WDB/593IA para INTERLAB S.A.');
+    addSys('ALTERNATIVA 1 — Formulario captura datos · Asesor cierra cotización');
+  }},
+  {fn:function(){addBot(PDP,'PDP · Aprobación EXPLÍCITA · Regla kickoff · Jelou','nlu');}},
+  {fn:function(){addUsr('Acepto');}},
+  {fn:function(){
+    addBot('Gracias, Carlos. Su consentimiento ha sido registrado.<br><br>¿En qué puedo ayudarle hoy?','PDP confirmado · Sesión iniciada · Jelou','nlu');
+  }},
+  {fn:function(){addUsr('quiero cotizar unos exámenes');}},
+  {fn:function(){
+    addBotCTA(
+      'Con gusto le ayudo con su cotización.<br><br>Le envío un formulario para capturar sus datos. Al finalizar, un asesor revisará la información y le enviará la cotización formal por este mismo canal.',
+      'Abrir formulario',
+      'openFlow(1)',
+      'nlu'
+    );
+    setCtx('F1·ALT1·esperando Flow');
+  }},
+  // Se ejecuta después de submitFlow()
+  {fn:function(){
+    addFlowSubmittedMsg({
+      title:'Formulario de cotización',
+      fields:[
+        ['Tipo de servicio',flowState.servicio],
+        ['Cédula',flowState.cedula],
+        ['Paciente',flowState.paciente],
+        ['Email',flowState.email],
+        ['PDF al correo',flowState.sendpdf?'Sí':'No'],
+        ['Ciudad',flowState.ciudad],
+        ['Tipo cliente',flowState.tipo==='particular'?'Particular':flowState.tipo==='convenio'?'Convenio':'Laboratorio referido'],
+        [flowState.tipo==='particular'?'Seguro':'Nro convenio/RUC', flowState.tipo==='particular'?flowState.seguro:flowState.convenio],
+      ],
+    });
+  }},
+  {fn:function(){
+    addBot('Recibimos su información, Carlos. Un asesor revisará su cotización y le contactará en breve.<br><br>Por seguridad, la cotización con tarifa de seguro siempre requiere validación humana.','Datos recibidos · escalando asesor · Jelou','api');
+    addAsesorPanel({
+      sections:[
+        {title:'Conversación previa al Flow',fields:[
+          ['PDP aceptado','✓ Sí — registrado'],
+          ['Intención detectada','Cotización de exámenes'],
+        ]},
+        {title:'Formulario recibido del cliente',fields:[
+          ['Tipo de servicio',flowState.servicio],
+          ['Cédula',flowState.cedula],
+          ['Paciente',flowState.paciente],
+          ['Email',flowState.email+(flowState.sendpdf?' · ✓ enviar PDF':'')],
+          ['Ciudad',flowState.ciudad],
+          ['Tipo cliente',flowState.tipo==='particular'?'Particular con seguro':flowState.tipo==='convenio'?'Convenio':'Laboratorio referido'],
+          [flowState.tipo==='particular'?'Seguro':'Nro convenio/RUC', flowState.tipo==='particular'?flowState.seguro:flowState.convenio],
+        ]},
+        {title:'Acción pendiente del asesor',fields:[
+          ['1','Validar cobertura del seguro/convenio'],
+          ['2','Seleccionar exámenes en LIS con el cliente'],
+          ['3','Generar cotización formal en sistema'],
+          ['4','Enviar PDF y código de cotización al cliente'],
+        ]},
+      ]
+    },'El asesor recibe <strong>el mismo resumen que vio el cliente</strong> + el historial del chat previo. Cliente y asesor ven exactamente lo mismo.');
+    done();
+  }},
+];
+
+// ═══════════════════════════════════════════════════
+// ALTERNATIVA 2 — STEPS DEL CHAT
+// ═══════════════════════════════════════════════════
+var ALT2=[
+  {fn:function(){
+    addDp('Hoy · Demo F1 · WDB/593IA para INTERLAB S.A.');
+    addSys('ALTERNATIVA 2 — Cotizador 100% automatizado · Replica el cotizador web · PDF al instante');
+  }},
+  {fn:function(){addBot(PDP,'PDP · Aprobación EXPLÍCITA · Regla kickoff · Jelou','nlu');}},
+  {fn:function(){addUsr('Acepto');}},
+  {fn:function(){
+    addBot('Gracias, Carlos. Su consentimiento ha sido registrado.<br><br>¿En qué puedo ayudarle hoy?','PDP confirmado · Sesión iniciada · Jelou','nlu');
+  }},
+  {fn:function(){addUsr('quiero cotizar unos exámenes');}},
+  {fn:function(){
+    addBotCTA(
+      'Con gusto. Le envío nuestro cotizador automático — el mismo de nuestra web, ahora en WhatsApp.<br><br>Seleccione sus exámenes y reciba su cotización al instante con PDF.',
+      'Abrir cotizador',
+      'openFlow(2)',
+      'nlu'
+    );
+    setCtx('F1·ALT2·esperando Flow');
+  }},
+  // Se ejecuta después de submitFlow()
+  {fn:function(){
+    var total=flowState.selectedExams.reduce(function(s,n){
+      var e=TOP30.find(function(x){return x.n===n;});return s+(e?e.p:0);
+    },0);
+    addFlowSubmittedMsg({
+      title:'Cotización automática',
+      fields:[
+        ['Tipo de servicio',flowState.servicio],
+        ['Cédula',flowState.cedula],
+        ['Paciente',flowState.paciente],
+        ['Email',flowState.email],
+        ['Ciudad',flowState.ciudad],
+      ],
+      exams:flowState.selectedExams.map(function(n){return TOP30.find(function(x){return x.n===n;});}),
+      total:total,
+    });
+  }},
+  {fn:function(){
+    var cod='COT-2026-'+Math.floor(1000+Math.random()*9000);
+    addBot('¡Cotización generada al instante, Carlos!<br><br>📄 <strong>Código:</strong> '+cod+'<br>📧 PDF enviado a <strong>'+flowState.email+'</strong>','Cotización automatizada · sin asesor · API Interlab · Jelou','api');
+    addCotCard(cod,false);
+  }},
+  {fn:function(){
+    addBot('Para finalizar su cotización con el precio correcto:<br><br>¿Cuenta con algún seguro médico privado o convenio?<br><br>SALUD │ MEDEC │ BMI │ IMED<br><em style="color:#888;font-size:11px">O escriba "ninguno" si no cuenta con seguro.</em>','NLU → aplicar descuento si corresponde · Jelou','nlu');
+  }},
+  {fn:function(){addUsr('BMI');}},
+  {fn:function(){
+    addBot('Validando cobertura con BMI usando su cédula '+flowState.cedula+'...','API BMI · validando · Jelou','api');
+  }},
+  {fn:function(){
+    addBot('✅ Cobertura BMI validada. Aplicando descuento del 20%.<br><br>📄 Cotización actualizada generada y enviada a su correo.','API BMI · descuento aplicado · PDF actualizado · Jelou','api');
+    addCotCard('COT-2026-ACTUALIZADA',true);
+  }},
+  {fn:function(){
+    addBot('¿Hay algo más en lo que pueda ayudarle hoy?','Cierre A · Jelou','nlu');
+  }},
+  {fn:function(){addUsr('no, gracias');}},
+  {fn:function(){
+    addBot('Con mucho gusto, Carlos. Cuando decida realizarse sus exámenes, presente el código de cotización en cualquier sede.<br><br>📍 <strong>Múltiples sedes:</strong> Guayaquil │ Quito │ Cuenca │ Portoviejo │ Manta │ Machala │ Milagro │ Quevedo<br>⏰ <strong>Atención 24/7:</strong> Guayaquil │ Machala │ Portoviejo<br><br>¡Que tenga un excelente día! 👋','Cierre post-cotización personalizado · 8 ciudades · Jelou','nlu');
+    done();
+  }},
+];
+
+// ── COTIZACIÓN CARD ────────────────────────────────────────
+function addCotCard(cod,conSeguro){
+  var exams=flowState.selectedExams.map(function(n){return TOP30.find(function(x){return x.n===n;});});
+  var rows='',tot=0;
+  exams.forEach(function(e){
+    var ps=conSeguro?parseFloat((e.p*0.80).toFixed(2)):e.p;
+    tot+=ps;
+    rows+='<div class="ccrow"><div><div class="ccn">'+e.n+'</div><div class="ccc">'+e.cod+' · '+e.cat+' · '+e.sub+'</div></div>'
+      +'<div style="text-align:right">'
+      +'<div class="ccpv">$'+e.p.toFixed(2)+'</div>'
+      +(conSeguro?'<div class="ccps">$'+ps.toFixed(2)+' c/BMI</div>':'')
+      +'</div></div>';
+  });
+  var c=document.getElementById('chat');
+  var el=document.createElement('div');el.className='ccard';
+  el.innerHTML=
+    '<div class="cch">'
+    +'<div class="ccht">🔬 COTIZACIÓN INTERLAB'+(conSeguro?' · ACTUALIZADA':'')+'</div>'
+    +'<div class="cchs">'+flowState.ciudad+' · Particular'+(conSeguro?' · Seguro BMI · 20% dto.':' · Tarifa base')+'</div></div>'
+    +'<div class="ccb">'+rows
+    +'<div class="cctot"><span class="cctl">TOTAL'+(conSeguro?' CON BMI':' PARTICULAR')+'</span><span class="cctv">$'+tot.toFixed(2)+'</span></div>'
+    +(conSeguro?'':'<div class="ccod">📄 CÓDIGO: '+cod+'</div>')
+    +'<div class="ccpdf"><div class="ccpdf-ico">PDF</div><div style="flex:1"><div class="ccpdf-t">Cotización_'+(conSeguro?'BMI_':'')+cod+'.pdf</div><div class="ccpdf-s">Enviado a '+flowState.email+'</div></div><div class="ccpdf-d">↓</div></div>'
+    +'<div class="ccnote">'
+    +(conSeguro?'💰 Ahorro de $'+(exams.reduce(function(s,e){return s+e.p;},0)-tot).toFixed(2)+' con su seguro BMI<br>':'')
+    +'* Nos reservamos el derecho de modificar precios sin previo aviso · * Aplican restricciones'
+    +'</div>'
+    +'<div class="bt">'+ts()+'</div>'
+    +'</div>';
+  c.appendChild(el);scrollDn();
+}
+
+// ═══════════════════════════════════════════════════
+// WHATSAPP FLOW · MULTI-SCREEN
+// ═══════════════════════════════════════════════════
+
+// Definición de pantallas por alternativa
+var FLOW_SCREENS={
+  1: ['servicio','datos','cliente','resumen'],
+  2: ['servicio','datos','ciudad','examenes','resumen']
+};
+
+function openFlow(alt){
+  flowState.alt=alt;
+  flowState.screen=0;
+  flowState.totalScreens=FLOW_SCREENS[alt].length;
+  // Pre-llenar para demo
+  flowState.cedula='0923456789';
+  flowState.paciente='Carlos Méndez Ruiz';
+  flowState.email='carlos.mendez@gmail.com';
+  flowState.sendpdf=true;
+  flowState.servicio='Ventanilla';
+  flowState.ciudad='Guayaquil';
+  flowState.tipo='particular';
+  flowState.seguro='BMI';
+  flowState.convenio='';
+  if(alt===2){
+    flowState.selectedExams=['Hemograma completo','TSH','Colesterol total','HDL Colesterol','LDL Colesterol','Triglicéridos'];
+    flowState.tab='H1';
+  }else{
+    flowState.selectedExams=[];
+  }
+  document.getElementById('flowmodal').className='flowmodal show';
+  document.body.classList.add('flow-open');
+  renderFlowScreen();
+}
+function closeFlow(){
+  document.getElementById('flowmodal').className='flowmodal';
+  document.body.classList.remove('flow-open');
+  // Forzar recálculo y scroll antes de continuar
+  fixH();
+  requestAnimationFrame(function(){
+    requestAnimationFrame(function(){
+      var c=document.getElementById('chat');
+      if(c)c.scrollTop=c.scrollHeight+9999;
+    });
+  });
+}
+function submitFlow(){
+  closeFlow();
+  // Esperar a que el modal termine de cerrarse antes de avanzar
+  setTimeout(function(){nextStep();},350);
+}
+function flowPrev(){
+  if(flowState.screen>0){
+    flowState.screen--;
+    renderFlowScreen();
+  }
+}
+function flowNext(){
+  if(flowState.screen<flowState.totalScreens-1){
+    flowState.screen++;
+    renderFlowScreen();
+  }else{
+    // Submit final
+    closeFlow();
+    setTimeout(function(){nextStep();},350);
+  }
+}
+
+function renderFlowScreen(){
+  var screens=FLOW_SCREENS[flowState.alt];
+  var screen=screens[flowState.screen];
+  // Progress bar
+  var prog=document.getElementById('flowprog');
+  prog.innerHTML='';
+  for(var i=0;i<flowState.totalScreens;i++){
+    var b=document.createElement('div');
+    b.className='flowprog-bar'+(i<flowState.screen?' done':i===flowState.screen?' on':'');
+    prog.appendChild(b);
+  }
+  // Title
+  document.getElementById('flowtitle').textContent='Cotización Interlab · '+(flowState.screen+1)+' de '+flowState.totalScreens;
+  // Render screen
+  if(screen==='servicio')renderServicio();
+  else if(screen==='datos')renderDatos();
+  else if(screen==='cliente')renderCliente();
+  else if(screen==='ciudad')renderCiudad();
+  else if(screen==='examenes')renderExamenes();
+  else if(screen==='resumen')renderResumen();
+}
+
+function renderServicio(){
+  document.getElementById('flowbody').innerHTML=
+    '<div class="flowscreentit">Tipo de servicio</div>'
+    +'<div class="flowscreendesc">¿Cómo desea tomarse la muestra?</div>'
+    +'<div class="flowradios">'
+    +'<div class="flowradio '+(flowState.servicio==='Ventanilla'?'on':'')+'" onclick="setServ(\'Ventanilla\')">'
+    +'<div class="flowradio-dot"></div>'
+    +'<div class="flowradio-lbl">Ventanilla</div>'
+    +'<div class="flowradio-icon">🏥</div>'
+    +'</div>'
+    +'<div class="flowradio '+(flowState.servicio==='Domicilio'?'on':'')+'" onclick="setServ(\'Domicilio\')">'
+    +'<div class="flowradio-dot"></div>'
+    +'<div class="flowradio-lbl">Domicilio</div>'
+    +'<div class="flowradio-icon">🏠</div>'
+    +'</div>'
+    +'</div>';
+  document.getElementById('flowfootinfo').innerHTML='<div class="flowfoot-tot-c">Paso 1 de '+flowState.totalScreens+'</div><div class="flowfoot-tot-l" style="margin-top:2px">Tipo de servicio</div>';
+  document.getElementById('flowsend').textContent='Continuar';
+  document.getElementById('flowsend').disabled=false;
+}
+function setServ(s){flowState.servicio=s;renderServicio();}
+
+function renderDatos(){
+  document.getElementById('flowbody').innerHTML=
+    '<div class="flowscreentit">Datos del paciente</div>'
+    +'<div class="flowscreendesc">Información necesaria para emitir la cotización.</div>'
+    +'<div class="flowfield">'
+    +'<div class="flowlbl">Cédula o pasaporte <span class="req">*</span></div>'
+    +'<input class="flowinp" value="'+flowState.cedula+'" oninput="flowState.cedula=this.value" placeholder="Identificación del paciente"/>'
+    +'</div>'
+    +'<div class="flowfield">'
+    +'<div class="flowlbl">Nombre completo del paciente <span class="req">*</span></div>'
+    +'<input class="flowinp" value="'+flowState.paciente+'" oninput="flowState.paciente=this.value" placeholder="Nombres y apellidos"/>'
+    +'</div>'
+    +'<div class="flowfield">'
+    +'<div class="flowlbl">Email</div>'
+    +'<input class="flowinp" value="'+flowState.email+'" oninput="flowState.email=this.value" placeholder="correo@ejemplo.com" type="email"/>'
+    +'</div>'
+    +'<div class="flowchk '+(flowState.sendpdf?'on':'')+'" onclick="flowState.sendpdf=!flowState.sendpdf;renderDatos()">'
+    +'<div class="flowchk-box"></div>'
+    +'<span>Enviar cotización por correo electrónico</span>'
+    +'</div>';
+  document.getElementById('flowfootinfo').innerHTML='<div class="flowfoot-tot-c">Paso 2 de '+flowState.totalScreens+'</div><div class="flowfoot-tot-l" style="margin-top:2px">Datos del paciente</div>';
+  document.getElementById('flowsend').textContent='Continuar';
+  document.getElementById('flowsend').disabled=!(flowState.cedula&&flowState.paciente);
+}
+
+function renderCliente(){
+  // ALT 1 — ciudad y tipo de cliente combinados
+  var segHtml='';
+  if(flowState.tipo==='particular'){
+    segHtml='<div class="flowfield"><div class="flowlbl">¿Cuenta con seguro médico?</div>'
+      +'<select class="flowselect" onchange="flowState.seguro=this.value">'
+      +['BMI','SALUD','MEDEC','IMED','Otra','Ninguno'].map(function(s){
+        return '<option value="'+s+'" '+(flowState.seguro===s?'selected':'')+'>'+s+'</option>';
+      }).join('')
+      +'</select></div>';
+  }else{
+    segHtml='<div class="flowfield"><div class="flowlbl">Número de convenio, lab o RUC <span class="req">*</span></div>'
+      +'<input class="flowinp" value="'+flowState.convenio+'" oninput="flowState.convenio=this.value" placeholder="Identificación de la entidad"/></div>';
+  }
+  document.getElementById('flowbody').innerHTML=
+    '<div class="flowscreentit">Ciudad y tipo de cliente</div>'
+    +'<div class="flowscreendesc">Para aplicar tarifas vigentes según su perfil.</div>'
+    +'<div class="flowfield"><div class="flowlbl">Ciudad <span class="req">*</span></div>'
+    +'<select class="flowselect" onchange="flowState.ciudad=this.value">'
+    +['Guayaquil','Quito','Cuenca','Portoviejo','Manta','Machala','Milagro','Quevedo'].map(function(c){
+      return '<option value="'+c+'" '+(flowState.ciudad===c?'selected':'')+'>'+c+'</option>';
+    }).join('')
+    +'</select></div>'
+    +'<div class="flowfield"><div class="flowlbl">Tipo de cliente <span class="req">*</span></div>'
+    +'<select class="flowselect" onchange="flowState.tipo=this.value;renderCliente()">'
+    +'<option value="particular" '+(flowState.tipo==='particular'?'selected':'')+'>Particular</option>'
+    +'<option value="convenio" '+(flowState.tipo==='convenio'?'selected':'')+'>Convenio institucional</option>'
+    +'<option value="laboratorio" '+(flowState.tipo==='laboratorio'?'selected':'')+'>Laboratorio referido</option>'
+    +'</select></div>'
+    +segHtml;
+  document.getElementById('flowfootinfo').innerHTML='<div class="flowfoot-tot-c">Paso 3 de '+flowState.totalScreens+'</div><div class="flowfoot-tot-l" style="margin-top:2px">Ciudad y tipo</div>';
+  document.getElementById('flowsend').textContent='Continuar';
+  document.getElementById('flowsend').disabled=false;
+}
+
+function renderCiudad(){
+  // ALT 2 — solo ciudad
+  document.getElementById('flowbody').innerHTML=
+    '<div class="flowscreentit">Ciudad de atención</div>'
+    +'<div class="flowscreendesc">Las tarifas y sedes disponibles dependen de la ciudad.</div>'
+    +'<div class="flowfield"><div class="flowlbl">Ciudad <span class="req">*</span></div>'
+    +'<select class="flowselect" onchange="flowState.ciudad=this.value">'
+    +['Guayaquil','Quito','Cuenca','Portoviejo','Manta','Machala','Milagro','Quevedo'].map(function(c){
+      return '<option value="'+c+'" '+(flowState.ciudad===c?'selected':'')+'>'+c+'</option>';
+    }).join('')
+    +'</select></div>';
+  document.getElementById('flowfootinfo').innerHTML='<div class="flowfoot-tot-c">Paso 3 de '+flowState.totalScreens+'</div><div class="flowfoot-tot-l" style="margin-top:2px">Ciudad</div>';
+  document.getElementById('flowsend').textContent='Continuar';
+  document.getElementById('flowsend').disabled=false;
+}
+
+function renderExamenes(){
+  // ALT 2 — selección de exámenes
+  var tot=flowState.selectedExams.reduce(function(s,n){
+    var e=TOP30.find(function(x){return x.n===n;});return s+(e?e.p:0);
+  },0);
+  var tabsHtml=['H1','H2','Esp','Aler'].map(function(t){
+    var label={H1:'Hoja 1',H2:'Hoja 2',Esp:'Especiales',Aler:'Alergias'}[t];
+    return '<div class="flowtab '+(flowState.tab===t?'on':'')+'" onclick="flowState.tab=\''+t+'\';renderExamenes()">'+label+'</div>';
+  }).join('');
+  // Filtrar exámenes
+  var visibles=TOP30.filter(function(e){
+    if(flowState.search){return e.n.toLowerCase().indexOf(flowState.search.toLowerCase())>=0;}
+    return e.cat===flowState.tab;
+  });
+  var listHtml='';
+  if(visibles.length===0){
+    listHtml='<div style="text-align:center;padding:24px 16px;color:var(--wasub);font-size:12px;line-height:1.5">'
+      +(flowState.tab==='Aler'?'No tenemos exámenes de alergias entre los top 30 más solicitados.<br><br>':'')
+      +'Tenemos <strong>557 exámenes disponibles</strong>.<br>Use el buscador o suba su orden médica.'
+      +'</div>';
+  }else{
+    listHtml=visibles.map(function(e){
+      var on=flowState.selectedExams.indexOf(e.n)>=0;
+      return '<div class="examitem '+(on?'on':'')+'" onclick="toggleExam(\''+e.n.replace(/'/g,"\\'")+'\')">'
+        +'<div class="cb"></div>'
+        +'<div class="examinfo"><div class="examname">'+e.n+'</div><div class="examcat">'+e.cod+' · '+e.sub+'</div></div>'
+        +'<div class="examprice">$'+e.p.toFixed(2)+'</div>'
+        +'</div>';
+    }).join('');
+  }
+  document.getElementById('flowbody').innerHTML=
+    '<div class="flowscreentit">Seleccione sus exámenes</div>'
+    +'<div class="flowscreendesc">Top 30 más solicitados en Ecuador · '+TOP30.length+' opciones · 557 disponibles vía API</div>'
+    +'<div class="ocrcard" onclick="alert(\'OCR + IA lee la orden médica y selecciona los exámenes automáticamente\')">'
+    +'<div class="ocrico">📷</div>'
+    +'<div class="ocrtit">¿Tiene la orden médica?</div>'
+    +'<div class="ocrsub">Adjunte foto o PDF · OCR + IA identifican los exámenes</div>'
+    +'</div>'
+    +'<div class="searchbox"><input class="flowinp" placeholder="🔍 Buscar examen..." value="'+flowState.search+'" oninput="flowState.search=this.value;renderExamenes()"/></div>'
+    +'<div class="flowtabs">'+tabsHtml+'</div>'
+    +'<div class="examlist">'+listHtml+'</div>';
+  document.getElementById('flowfootinfo').innerHTML='<div class="flowfoot-tot-l">Total estimado · '+flowState.selectedExams.length+' exámenes</div><div class="flowfoot-tot-v">$ '+tot.toFixed(2)+'</div>';
+  document.getElementById('flowsend').textContent='Continuar';
+  document.getElementById('flowsend').disabled=flowState.selectedExams.length===0;
+}
+function toggleExam(name){
+  var i=flowState.selectedExams.indexOf(name);
+  if(i>=0)flowState.selectedExams.splice(i,1);
+  else flowState.selectedExams.push(name);
+  renderExamenes();
+}
+
+function renderResumen(){
+  var tot=flowState.selectedExams.reduce(function(s,n){
+    var e=TOP30.find(function(x){return x.n===n;});return s+(e?e.p:0);
+  },0);
+  var examenesHtml='';
+  if(flowState.alt===2&&flowState.selectedExams.length){
+    examenesHtml='<div class="summbox"><div class="summlbl">Exámenes seleccionados</div><div class="summlist">';
+    flowState.selectedExams.forEach(function(n){
+      var e=TOP30.find(function(x){return x.n===n;});
+      examenesHtml+='<div style="display:flex;justify-content:space-between;padding:2px 0"><span>• '+e.n+'</span><span style="font-family:'+'\'JetBrains Mono\',monospace'+'">$'+e.p.toFixed(2)+'</span></div>';
+    });
+    examenesHtml+='</div></div>';
+  }
+  var clienteInfo=flowState.alt===1
+    ? '<div class="summbox"><div class="summsec"><div class="summlbl">Ciudad</div><div class="summval">'+flowState.ciudad+'</div></div>'
+      +'<div class="summsec"><div class="summlbl">Tipo de cliente</div><div class="summval">'+(flowState.tipo==='particular'?'Particular':flowState.tipo==='convenio'?'Convenio':'Laboratorio referido')+'</div></div>'
+      +(flowState.tipo==='particular'?'<div class="summsec"><div class="summlbl">Seguro</div><div class="summval">'+flowState.seguro+'</div></div>':'<div class="summsec"><div class="summlbl">Nro convenio/RUC</div><div class="summval">'+(flowState.convenio||'—')+'</div></div>')
+      +'</div>'
+    : '<div class="summbox"><div class="summsec"><div class="summlbl">Ciudad</div><div class="summval">'+flowState.ciudad+'</div></div></div>';
+  document.getElementById('flowbody').innerHTML=
+    '<div class="flowscreentit">Revise y envíe</div>'
+    +'<div class="flowscreendesc">Verifique que la información sea correcta antes de enviar.</div>'
+    +'<div class="summbox">'
+    +'<div class="summsec"><div class="summlbl">Tipo de servicio</div><div class="summval">'+flowState.servicio+'</div></div>'
+    +'<div class="summsec"><div class="summlbl">Cédula</div><div class="summval">'+flowState.cedula+'</div></div>'
+    +'<div class="summsec"><div class="summlbl">Paciente</div><div class="summval">'+flowState.paciente+'</div></div>'
+    +'<div class="summsec"><div class="summlbl">Email</div><div class="summval">'+(flowState.email||'—')+(flowState.sendpdf?' · ✓ recibir PDF':'')+'</div></div>'
+    +'</div>'
+    +clienteInfo
+    +examenesHtml;
+  document.getElementById('flowfootinfo').innerHTML=flowState.alt===2
+    ? '<div class="flowfoot-tot-l">Total estimado</div><div class="flowfoot-tot-v">$ '+tot.toFixed(2)+'</div>'
+    : '<div class="flowfoot-tot-c">Paso final</div><div class="flowfoot-tot-l" style="margin-top:2px">Confirmar y enviar</div>';
+  document.getElementById('flowsend').textContent=flowState.alt===2?'Cotizar y enviar':'Enviar al asesor';
+  document.getElementById('flowsend').disabled=false;
+}
+
+// ── RUNNER ────────────────────────────────────────────────
+function startAlt(n){
+  currentAlt=n;stepIdx=0;
+  document.getElementById('intro').className='hide';
+  setTimeout(function(){document.getElementById('intro').style.display='none';},500);
+  document.getElementById('main').className='show';
+  document.getElementById('altbadge').textContent='ALT '+n;
+  document.getElementById('bst').textContent='F1 · Alternativa '+n+' · Powered by Jelou';
+  fixH();
+  document.getElementById('chat').innerHTML='';
+  document.getElementById('nxtbtn').disabled=false;
+  document.getElementById('nxtbtn').textContent='▶ Siguiente paso';
+  setCtx(n===1?'F1·ALT1·Formulario+Asesor':'F1·ALT2·Cotizador automatizado');
+  setHint('▶ Presiona Siguiente paso para avanzar');
+}
+function nextStep(){
+  var arr=currentAlt===1?ALT1:ALT2;
+  if(stepIdx>=arr.length){done();return;}
+  arr[stepIdx].fn();
+  stepIdx++;
+  scrollDn();
+  if(stepIdx>=arr.length){done();}
+}
+function restart(){startAlt(currentAlt);}
+function goIntro(){
+  document.getElementById('main').className='';
+  document.getElementById('intro').style.display='flex';
+  document.getElementById('intro').className='';
+}
+</script>
+</body>
+</html>
