@@ -98,6 +98,41 @@ html,body{height:100%;overflow:hidden;background:#0a0a0a;font-family:var(--f)}
 .flowmsg-total-v{font-size:15px;font-weight:800;font-family:var(--m)}
 .flowmsg-bt{font-size:9px;color:#666;padding:0 12px 6px;text-align:right}
 
+/* IMAGEN ORDEN MÉDICA (subida por el usuario) */
+.userimg{max-width:88%;align-self:flex-end;background:var(--wam);border-radius:13px;border-top-right-radius:3px;padding:5px;box-shadow:0 1px 3px rgba(0,0,0,.1);overflow:hidden}
+.userimg-thumb{width:100%;max-width:240px;border-radius:9px;background:linear-gradient(135deg,#FFF,#F8FAFC);border:1px solid #E2E8F0;padding:14px;display:block;position:relative;min-height:160px}
+.userimg-header{display:flex;align-items:center;gap:8px;padding-bottom:8px;border-bottom:1px solid #075E54;margin-bottom:8px}
+.userimg-logo{width:24px;height:24px;border-radius:4px;background:#075E54;color:#fff;font-size:9px;font-weight:800;display:flex;align-items:center;justify-content:center}
+.userimg-h-t{font-size:9px;font-weight:700;color:#075E54;letter-spacing:.3px}
+.userimg-h-s{font-size:7px;color:#888;margin-top:1px}
+.userimg-line{font-size:8.5px;color:#333;line-height:1.5;font-family:Georgia,serif}
+.userimg-line-b{font-weight:700;color:#075E54}
+.userimg-exam{font-size:9px;color:#222;padding:1px 0;font-family:Georgia,serif;display:flex;gap:5px}
+.userimg-exam::before{content:'•';color:#666}
+.userimg-bt{font-size:9px;color:#666;padding:4px 8px 1px;text-align:right}
+
+/* CARD DE EXÁMENES DETECTADOS POR OCR */
+.ocrresult{align-self:flex-start;max-width:92%;background:#fff;border-radius:13px;border-top-left-radius:3px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,.12)}
+.ocrres-h{background:linear-gradient(135deg,#7C3AED,#A855F7);padding:11px 14px;display:flex;align-items:center;gap:10px}
+.ocrres-h-ico{width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
+.ocrres-h-t{color:#fff;font-size:11px;font-weight:800;letter-spacing:.5px}
+.ocrres-h-s{color:rgba(255,255,255,.7);font-size:9px;margin-top:1px}
+.ocrres-b{padding:11px 14px}
+.ocrres-info{font-size:11px;color:#444;margin-bottom:10px;line-height:1.5}
+.ocrres-row{display:flex;align-items:flex-start;gap:10px;padding:7px 0;border-bottom:1px solid #f5f5f5}
+.ocrres-row:last-child{border:none}
+.ocrres-check{width:18px;height:18px;border-radius:50%;background:#10B981;color:#fff;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;flex-shrink:0;margin-top:1px}
+.ocrres-check.api{background:#F59E0B}
+.ocrres-info-w{flex:1}
+.ocrres-name{font-size:12px;color:#111;font-weight:600;line-height:1.3}
+.ocrres-meta{font-size:9.5px;color:#666;margin-top:2px;font-family:var(--m)}
+.ocrres-tag-api{display:inline-block;background:#FEF3C7;color:#92400E;border-radius:4px;padding:1px 6px;font-size:8.5px;font-weight:700;margin-top:3px;border:.5px solid #F59E0B;font-family:var(--m);letter-spacing:.3px}
+.ocrres-price{font-size:13px;font-weight:800;color:#065F46;text-align:right;font-family:var(--m);flex-shrink:0}
+.ocrres-total{background:#F0FDF4;border-radius:8px;padding:8px 12px;margin-top:10px;display:flex;justify-content:space-between;align-items:center}
+.ocrres-total-l{font-size:10px;font-weight:700;color:#065F46}
+.ocrres-total-v{font-size:16px;font-weight:800;color:#065F46;font-family:var(--m)}
+.ocrres-note{font-size:9.5px;color:#555;margin-top:8px;padding:7px 9px;background:#F3F4F6;border-radius:6px;line-height:1.5}
+
 /* PANEL ASESOR */
 .apanel{align-self:flex-start;max-width:93%;background:linear-gradient(135deg,#1E1B4B,#2D2A6E);border-radius:13px;border-top-left-radius:3px;padding:0;box-shadow:0 2px 12px rgba(0,0,0,.25);overflow:hidden}
 .aphdr{background:rgba(0,0,0,.25);padding:9px 14px;display:flex;align-items:center;gap:8px}
@@ -452,6 +487,67 @@ function addAsesorPanel(data,nota){
   c.appendChild(p);scrollDn();
 }
 
+// Mensaje del usuario subiendo imagen de orden médica
+function addUserOrderImage(){
+  var c=document.getElementById('chat');
+  var d=document.createElement('div');d.className='userimg';
+  d.innerHTML='<div class="userimg-thumb">'
+    +'<div class="userimg-header">'
+    +'<div class="userimg-logo">IL</div>'
+    +'<div style="flex:1"><div class="userimg-h-t">INTERLAB · ORDEN DE LABORATORIO</div><div class="userimg-h-s">Documento médico</div></div>'
+    +'</div>'
+    +'<div class="userimg-line"><span class="userimg-line-b">Paciente:</span> Carlos Méndez Ruiz</div>'
+    +'<div class="userimg-line"><span class="userimg-line-b">CI:</span> 0923456789 · <span class="userimg-line-b">Fecha:</span> 18 may 2026</div>'
+    +'<div class="userimg-line"><span class="userimg-line-b">Médico:</span> Dr. Andrés Velasco · MED-12847</div>'
+    +'<div class="userimg-line" style="margin-top:6px;font-weight:700;color:#075E54">EXÁMENES SOLICITADOS:</div>'
+    +'<div class="userimg-exam">Hemograma completo</div>'
+    +'<div class="userimg-exam">Glucosa en ayunas</div>'
+    +'<div class="userimg-exam">Perfil lipídico completo</div>'
+    +'<div class="userimg-exam">TSH</div>'
+    +'<div class="userimg-exam">Ferritina sérica</div>'
+    +'</div>'
+    +'<div class="userimg-bt">'+ts()+' ✓✓</div>';
+  c.appendChild(d);scrollDn();
+}
+
+// Card con resultados del OCR + IA
+function addOCRResult(){
+  var c=document.getElementById('chat');
+  var el=document.createElement('div');el.className='ocrresult';
+  // 4 del top 30 + 1 vía API
+  var detected=[
+    {ref:'Hemograma completo',cod:'HEM',sub:'H1 · Hematología',p:9.50,api:false},
+    {ref:'Glucosa en ayunas',cod:'GLUA',sub:'H1 · Bioquímica',p:8.50,api:false},
+    {ref:'Perfil lipídico (4 pruebas)',cod:'LIPI',sub:'H1 · Perfil lipídico',p:32.00,api:false},
+    {ref:'TSH',cod:'TSH',sub:'H2 · Endocrinología',p:12.00,api:false},
+    {ref:'Ferritina sérica',cod:'FERR',sub:'Esp · Hierro · Vía API 557 exámenes',p:16.50,api:true},
+  ];
+  var rows='',tot=0;
+  detected.forEach(function(e){
+    tot+=e.p;
+    rows+='<div class="ocrres-row">'
+      +'<div class="ocrres-check'+(e.api?' api':'')+'">✓</div>'
+      +'<div class="ocrres-info-w">'
+      +'<div class="ocrres-name">'+e.ref+'</div>'
+      +'<div class="ocrres-meta">'+e.cod+' · '+e.sub+'</div>'
+      +(e.api?'<div class="ocrres-tag-api">⚡ API Interlab</div>':'')
+      +'</div>'
+      +'<div class="ocrres-price">$'+e.p.toFixed(2)+'</div>'
+      +'</div>';
+  });
+  el.innerHTML='<div class="ocrres-h">'
+    +'<div class="ocrres-h-ico">🤖</div>'
+    +'<div><div class="ocrres-h-t">OCR + IA · ANÁLISIS COMPLETO</div><div class="ocrres-h-s">5 exámenes detectados en su orden</div></div>'
+    +'</div>'
+    +'<div class="ocrres-b">'
+    +'<div class="ocrres-info">He analizado su orden médica y detecté los siguientes exámenes:</div>'
+    +rows
+    +'<div class="ocrres-total"><span class="ocrres-total-l">TOTAL ESTIMADO PARTICULAR</span><span class="ocrres-total-v">$'+tot.toFixed(2)+'</span></div>'
+    +'<div class="ocrres-note">✓ 4 exámenes coinciden con nuestro catálogo principal<br>⚡ <strong>Ferritina sérica</strong> identificada del catálogo completo de 557 exámenes vía API Interlab</div>'
+    +'</div>';
+  c.appendChild(el);scrollDn();
+}
+
 // ── TOP 30 EXÁMENES MÁS SOLICITADOS EN ECUADOR ──────────────
 var TOP30=[
   {n:'Hemograma completo',cod:'HEM',p:9.50,cat:'H1',sub:'Hematología'},
@@ -484,6 +580,7 @@ var TOP30=[
   {n:'Beta-HCG (embarazo)',cod:'BHCG',p:14.00,cat:'H2',sub:'Marcadores'},
   {n:'Vitamina D',cod:'VITD',p:28.00,cat:'Esp',sub:'Vitaminas'},
   {n:'Vitamina B12',cod:'B12',p:22.00,cat:'Esp',sub:'Vitaminas'},
+  {n:'Ferritina sérica',cod:'FERR',p:16.50,cat:'Esp',sub:'Hierro · vía API'},
 ];
 
 // ── MENSAJES GLOBALES ──────────────────────────────────────
@@ -509,11 +606,12 @@ var flowState={
 
 // ═══════════════════════════════════════════════════
 // ALTERNATIVA 1 — STEPS DEL CHAT
+// Recibe imagen (sin OCR) + Formulario → Asesor procesa todo
 // ═══════════════════════════════════════════════════
 var ALT1=[
   {fn:function(){
     addDp('Hoy · Demo F1 · WDB/593IA para INTERLAB S.A.');
-    addSys('ALTERNATIVA 1 — Formulario captura datos · Asesor cierra cotización');
+    addSys('ALTERNATIVA 1 — Recibe orden médica + Formulario datos · Asesor identifica exámenes y cotiza');
   }},
   {fn:function(){addBot(PDP,'PDP · Aprobación EXPLÍCITA · Regla kickoff · Jelou','nlu');}},
   {fn:function(){addUsr('Acepto');}},
@@ -522,13 +620,19 @@ var ALT1=[
   }},
   {fn:function(){addUsr('quiero cotizar unos exámenes');}},
   {fn:function(){
+    addBot('Con gusto le ayudo con su cotización.<br><br>¿Tiene la orden médica? Puede enviarme una foto o PDF para que nuestro asesor procese su cotización.','NLU → COTIZAR · solicitando orden médica · Jelou','nlu');
+  }},
+  {fn:function(){addUsr('sí, le envío la imagen');}},
+  {fn:function(){addUserOrderImage();}},
+  {fn:function(){
+    addBot('Perfecto, recibí su orden médica.<br><br>Para que el asesor procese su cotización, complete sus datos en el formulario.','Imagen recibida · sin OCR · solicitando datos · Jelou','nlu');
     addBotCTA(
-      'Con gusto le ayudo con su cotización.<br><br>Le envío un formulario para capturar sus datos. Al finalizar, un asesor revisará la información y le enviará la cotización formal por este mismo canal.',
+      'Por favor complete sus datos para que el asesor procese su cotización.',
       'Abrir formulario',
       'openFlow(1)',
       'nlu'
     );
-    setCtx('F1·ALT1·esperando Flow');
+    setCtx('F1·ALT1·imagen recibida·esperando Flow');
   }},
   // Se ejecuta después de submitFlow()
   {fn:function(){
@@ -547,12 +651,13 @@ var ALT1=[
     });
   }},
   {fn:function(){
-    addBot('Recibimos su información, Carlos. Un asesor revisará su cotización y le contactará en breve.<br><br>Por seguridad, la cotización con tarifa de seguro siempre requiere validación humana.','Datos recibidos · escalando asesor · Jelou','api');
+    addBot('Recibimos su información, Carlos. Un asesor revisará su orden médica junto con sus datos y le enviará la cotización formal en breve.','Imagen + datos recibidos · escalando asesor · Jelou','api');
     addAsesorPanel({
       sections:[
         {title:'Conversación previa al Flow',fields:[
           ['PDP aceptado','✓ Sí — registrado'],
           ['Intención detectada','Cotización de exámenes'],
+          ['Orden médica adjuntada','✓ Imagen recibida — sin procesar OCR'],
         ]},
         {title:'Formulario recibido del cliente',fields:[
           ['Tipo de servicio',flowState.servicio],
@@ -564,24 +669,24 @@ var ALT1=[
           [flowState.tipo==='particular'?'Seguro':'Nro convenio/RUC', flowState.tipo==='particular'?flowState.seguro:flowState.convenio],
         ]},
         {title:'Acción pendiente del asesor',fields:[
-          ['1','Validar cobertura del seguro/convenio'],
-          ['2','Seleccionar exámenes en LIS con el cliente'],
-          ['3','Generar cotización formal en sistema'],
-          ['4','Enviar PDF y código de cotización al cliente'],
+          ['1','Revisar imagen de la orden médica adjunta'],
+          ['2','Identificar exámenes en el LIS'],
+          ['3','Validar cobertura del seguro/convenio'],
+          ['4','Generar cotización formal y enviar al cliente'],
         ]},
       ]
-    },'El asesor recibe <strong>el mismo resumen que vio el cliente</strong> + el historial del chat previo. Cliente y asesor ven exactamente lo mismo.');
+    },'El asesor recibe <strong>imagen de la orden médica + formulario con datos del cliente</strong>. El asesor identifica los exámenes en el sistema y cierra la cotización.');
     done();
   }},
 ];
 
 // ═══════════════════════════════════════════════════
-// ALTERNATIVA 2 — STEPS DEL CHAT
+// ALTERNATIVA 2 — STEPS DEL CHAT · con OCR antes del Flow
 // ═══════════════════════════════════════════════════
 var ALT2=[
   {fn:function(){
     addDp('Hoy · Demo F1 · WDB/593IA para INTERLAB S.A.');
-    addSys('ALTERNATIVA 2 — Cotizador 100% automatizado · Replica el cotizador web · PDF al instante');
+    addSys('ALTERNATIVA 2 — OCR + IA → Cotizador automatizado → PDF al instante · Sin asesor');
   }},
   {fn:function(){addBot(PDP,'PDP · Aprobación EXPLÍCITA · Regla kickoff · Jelou','nlu');}},
   {fn:function(){addUsr('Acepto');}},
@@ -590,13 +695,25 @@ var ALT2=[
   }},
   {fn:function(){addUsr('quiero cotizar unos exámenes');}},
   {fn:function(){
+    addBot('Con gusto. ¿Tiene la orden médica? Puede enviarme una foto o PDF y le ayudo a identificar los exámenes automáticamente.','NLU → COTIZAR · ofreciendo OCR · Jelou','nlu');
+  }},
+  {fn:function(){addUsr('sí, le envío la imagen');}},
+  {fn:function(){addUserOrderImage();}},
+  {fn:function(){
+    addBot('🤖 Procesando su orden médica con OCR + IA...<br><em style="color:#888;font-size:11px">Identificando exámenes con el catálogo Interlab</em>','OCR + IA · API 557 exámenes Interlab · procesando · Jelou','api');
+  }},
+  {fn:function(){
+    addOCRResult();
+  }},
+  {fn:function(){
+    addBot('Identifiqué <strong>5 exámenes</strong> en su orden — 4 del catálogo principal y 1 (<strong>Ferritina sérica</strong>) consultado vía API de 557 exámenes Interlab.<br><br>Le abro el cotizador con sus exámenes ya pre-seleccionados. Solo confirme sus datos y reciba la cotización al instante.','OCR exitoso · pre-cargando Flow · Jelou','nlu');
     addBotCTA(
-      'Con gusto. Le envío nuestro cotizador automático — el mismo de nuestra web, ahora en WhatsApp.<br><br>Seleccione sus exámenes y reciba su cotización al instante con PDF.',
+      'Sus exámenes ya están seleccionados — solo complete sus datos para recibir la cotización.',
       'Abrir cotizador',
       'openFlow(2)',
       'nlu'
     );
-    setCtx('F1·ALT2·esperando Flow');
+    setCtx('F1·ALT2·OCR completo·5 exámenes·esperando Flow');
   }},
   // Se ejecuta después de submitFlow()
   {fn:function(){
@@ -700,7 +817,7 @@ function openFlow(alt){
   flowState.seguro='BMI';
   flowState.convenio='';
   if(alt===2){
-    flowState.selectedExams=['Hemograma completo','TSH','Colesterol total','HDL Colesterol','LDL Colesterol','Triglicéridos'];
+    flowState.selectedExams=['Hemograma completo','Glucosa en ayunas','Colesterol total','HDL Colesterol','LDL Colesterol','Triglicéridos','TSH','Ferritina sérica'];
     flowState.tab='H1';
   }else{
     flowState.selectedExams=[];
